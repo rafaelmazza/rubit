@@ -6,10 +6,10 @@ require 'rubit/version'
 Gem::Specification.new do |spec|
   spec.name          = "rubit"
   spec.version       = Rubit::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ["Rafael Mazza"]
+  spec.email         = ["rafaelmazza@gmail.com"]
+  spec.summary       = %q{Ruby program that simulates a basic interactive bitmap editor.}
+  spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~> 3.1.0"
+  spec.add_development_dependency "cucumber", "~> 1.3.16"
+  spec.add_development_dependency "aruba", "~> 0.6.1"
 end

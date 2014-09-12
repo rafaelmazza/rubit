@@ -19,6 +19,16 @@ module Rubit
     end
   end
 
+  class CommandV < Command
+    def initialize(column, y1, y2, colour)
+      @column, @y1, @y2, @colour = column, y1, y2, colour
+    end
+    def execute(bitmap)
+      bitmap.draw_vertical_segment(@column, @y1, @y2, @colour)
+      bitmap
+    end
+  end
+
   class CommandL < Command
     def initialize(column, row, colour)
       @column, @row, @colour = column, row, colour

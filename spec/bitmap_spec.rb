@@ -37,6 +37,20 @@ describe Rubit::Bitmap do
     end
   end
 
+  describe '#draw_vertical_segment' do
+    it 'draws a vertical segment on the bitmap' do
+      subject.draw_vertical_segment(2, 3, 4, 'W')
+      expect(subject.pixels).to eq([
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 'W', 0, 0, 0],
+        [0, 'W', 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ])
+    end
+  end
+
   describe '#get_colour' do
     it 'gets pixel colour using one-based indexing' do
       # 0  0  0

@@ -13,12 +13,17 @@ module Rubit
     end
 
     def set_colour(column, row, colour)
-    # def set_colour(row, column, colour)
       @pixels[row - 1][column - 1] = colour
     end
 
     def get_colour(column, row)
       @pixels[row - 1][column - 1]
+    end
+
+    def draw_horizontal_segment(x1, x2, row, colour)
+      (x1..x2).each do |column|
+        set_colour(column, row, colour)
+      end
     end
 
     def draw_vertical_segment(column, y1, y2, colour)

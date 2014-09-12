@@ -19,6 +19,16 @@ module Rubit
     end
   end
 
+  class CommandH < Command
+    def initialize(x1, x2, row, colour)
+      @x1, @x2, @row, @colour = x1, x2, row, colour
+    end
+    def execute(bitmap)
+      bitmap.draw_horizontal_segment(@x1, @x2, @row, @colour)
+      bitmap
+    end
+  end
+
   class CommandV < Command
     def initialize(column, y1, y2, colour)
       @column, @y1, @y2, @colour = column, y1, y2, colour

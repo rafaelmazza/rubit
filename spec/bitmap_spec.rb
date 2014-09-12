@@ -37,6 +37,20 @@ describe Rubit::Bitmap do
     end
   end
 
+  describe '#draw_horizontal_segment' do
+    it 'draws a horizontal segment on the bitmap' do
+      subject.draw_horizontal_segment(3, 4, 2, 'Z')
+      expect(subject.pixels).to eq([
+        [0, 0, 0, 0, 0],
+        [0, 0, 'Z', 'Z', 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ])
+    end
+  end
+
   describe '#draw_vertical_segment' do
     it 'draws a vertical segment on the bitmap' do
       subject.draw_vertical_segment(2, 3, 4, 'W')

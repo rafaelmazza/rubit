@@ -22,8 +22,9 @@ describe Rubit::CommandI do
     let(:rows) { 6 }
     subject { Rubit::CommandI.new(columns, rows) }
     it 'creates a bitmap' do
+      bitmap = double
       expect(Rubit::Bitmap).to receive(:new).with(columns, rows)
-      subject.execute
+      subject.execute(bitmap)
     end
   end
 end

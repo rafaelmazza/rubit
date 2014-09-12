@@ -1,5 +1,6 @@
 module Rubit
   class CLI
+    attr_reader :bitmap
     def initialize(input=$stdin, output=$stdout)
       @input = input
       @output = output
@@ -8,7 +9,7 @@ module Rubit
     def start
       while command_input = get_command_input
         command = CommandParser.parse(command_input)
-        command.execute
+        @bitmap = command.execute(@bitmap)
         break if command.terminate
       end
     end

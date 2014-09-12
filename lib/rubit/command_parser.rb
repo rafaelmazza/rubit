@@ -9,20 +9,30 @@ module Rubit
   end
 
   class Command
-    attr_reader :terminate
+    attr_reader :terminate, :bitmap
   end
 
   class CommandI < Command
     def initialize(columns, rows)
       @columns, @rows = columns, rows
     end
-    def execute
-      puts Rubit::Bitmap.new(@columns, @rows)
+    def execute(bitmap)
+      bitmap = Rubit::Bitmap.new(@columns, @rows)
+      bitmap
+    end
+  end
+
+  class CommandS < Command
+    def execute(bitmap)
+      # puts 'aqui'
+      # puts bitmap.inspect
+      puts bitmap
+      bitmap
     end
   end
 
   class CommandX < Command
-    def execute
+    def execute(bitmap)
       puts 'Bye!'
       @terminate = true
     end

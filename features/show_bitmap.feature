@@ -1,6 +1,6 @@
-Feature: Create bitmap
+Feature: Shows bitmap
 
-  Scenario: Create a new bitmap
+  Scenario: Shows created bitmap
     Given I run `rubit` interactively
     When I type "I 3 3"
     And I type "S"

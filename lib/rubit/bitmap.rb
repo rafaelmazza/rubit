@@ -17,7 +17,21 @@ module Rubit
     end
 
     def get_colour(column, row)
-      @pixels[row - 1][column - 1]
+      @pixels[row - 1][column - 1] 
+    end
+
+    def fill(x, y, new_colour, old_colour)
+      current_colour = get_colour(x, y)
+      if (x > 0 && x <= @columns_count &&
+          y > 0 && y <= @rows_count &&
+          current_colour == old_colour &&
+          current_colour != new_colour)
+        set_colour(x, y, new_colour)
+        fill(x + 1, y, new_colour, old_colour)
+        fill(x - 1, y, new_colour, old_colour)
+        fill(x, y + 1, new_colour, old_colour)
+        fill(x, y - 1, new_colour, old_colour)
+      end
     end
 
     def draw_horizontal_segment(x1, x2, row, colour)
@@ -33,8 +47,6 @@ module Rubit
     end
 
     def clear
-      puts 'aqui'
-      puts create_new_pixel_matrix.inspect
       @pixels = create_new_pixel_matrix
     end
 
@@ -43,3 +55,4 @@ module Rubit
     end
   end
 end
+

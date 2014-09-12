@@ -14,7 +14,18 @@ module Rubit
 
   class CommandC < Command
     def execute(bitmap)
-      bitmap = bitmap.clear
+      bitmap.clear
+      bitmap
+    end
+  end
+
+  class CommandF < Command
+    def initialize(x, y, colour)
+      @x, @y, @colour = x, y, colour
+    end
+    def execute(bitmap)
+      @old_colour = bitmap.get_colour(@x, @y)
+      bitmap.fill(@x, @y, @colour, @old_colour)
       bitmap
     end
   end

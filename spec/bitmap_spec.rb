@@ -65,6 +65,23 @@ describe Rubit::Bitmap do
     end
   end
 
+  describe '#fill' do
+    it 'fills a region' do
+      subject = Rubit::Bitmap.new(5, 6)
+      subject.draw_vertical_segment(2, 3, 4, 'W')
+      subject.draw_horizontal_segment(3, 4, 2, 'Z')
+      subject.fill(3, 3, 'J', 0)
+      expect(subject.pixels).to eq([
+        ['J', 'J', 'J', 'J', 'J'],
+        ['J', 'J', 'Z', 'Z', 'J'],
+        ['J', 'W', 'J', 'J', 'J'],
+        ['J', 'W', 'J', 'J', 'J'],
+        ['J', 'J', 'J', 'J', 'J'],
+        ['J', 'J', 'J', 'J', 'J']
+      ])
+    end
+  end
+
   describe '#get_colour' do
     it 'gets pixel colour using one-based indexing' do
       # 0  0  0

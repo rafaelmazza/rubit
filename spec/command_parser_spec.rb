@@ -16,6 +16,22 @@ describe Rubit::CommandParser do
   end
 end
 
+describe Rubit::CommandF do
+  describe '#execute' do
+    let(:x) { 2 }
+    let(:y) { 3 }
+    let(:new_colour) { 'A' }
+    let(:old_colour) { 0 }
+    subject { Rubit::CommandF.new(x, y, new_colour) }
+    it 'fills bitmap area' do
+      bitmap = double()
+      allow(bitmap).to receive(:get_colour) { 0 }
+      expect(bitmap).to receive(:fill).with(x, y, new_colour, old_colour)
+      subject.execute(bitmap)
+    end
+  end
+end
+
 describe Rubit::CommandL do
   describe '#execute' do
     let(:column) { 2 }

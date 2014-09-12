@@ -9,7 +9,7 @@ module Rubit
     end
 
     def create_new_pixel_matrix
-      Array.new(@rows_count) { Array.new(@columns_count) { 0 }}
+      Array.new(@rows_count) { Array.new(@columns_count) { 0 } }
     end
 
     def set_colour(column, row, colour)
@@ -18,6 +18,12 @@ module Rubit
 
     def get_colour(column, row)
       @pixels[row - 1][column - 1]
+    end
+
+    def clear
+      puts 'aqui'
+      puts create_new_pixel_matrix.inspect
+      @pixels = create_new_pixel_matrix
     end
 
     def to_s

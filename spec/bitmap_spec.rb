@@ -47,4 +47,12 @@ describe Rubit::Bitmap do
     end
   end
 
+  describe '#clear' do
+    it 'clear the pixel matrix' do
+      subject.set_colour(1, 1, 'A')
+      subject.clear
+      expect(subject.pixels).to eq(empty_pixel_matrix)
+    end
+  end
+
 end

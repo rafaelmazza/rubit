@@ -16,13 +16,27 @@ describe Rubit::CommandParser do
   end
 end
 
+describe Rubit::CommandL do
+  describe '#execute' do
+    let(:column) { 2 }
+    let(:row) { 3 }
+    let(:colour) { 'A' }
+    subject { Rubit::CommandL.new(column, row, colour) }
+    it 'colours a bitmap pixel' do
+      bitmap = double()
+      expect(bitmap).to receive(:set_colour).with(column, row, colour)
+      subject.execute(bitmap)
+    end
+  end
+end
+
 describe Rubit::CommandI do
   describe '#execute' do
     let(:columns) { 5 }
     let(:rows) { 6 }
     subject { Rubit::CommandI.new(columns, rows) }
     it 'creates a bitmap' do
-      bitmap = double
+      bitmap = double()
       expect(Rubit::Bitmap).to receive(:new).with(columns, rows)
       subject.execute(bitmap)
     end

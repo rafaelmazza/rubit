@@ -1,6 +1,7 @@
 module Rubit
   class Bitmap
-    attr_reader :columns_count, :rows_count, :pixels
+    attr_accessor :columns_count, :rows_count, :pixels
+
     def initialize(columns_count, rows_count)
       @columns_count = columns_count
       @rows_count = rows_count
@@ -9,6 +10,14 @@ module Rubit
 
     def create_new_pixel_matrix
       Array.new(@rows_count) { Array.new(@columns_count) { 0 }}
+    end
+
+    def set_colour(column, row, colour)
+      @pixels[row - 1][column - 1] = colour
+    end
+
+    def get_colour(column, row)
+      @pixels[row - 1][column - 1]
     end
 
     def to_s

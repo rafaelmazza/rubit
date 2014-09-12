@@ -25,4 +25,26 @@ describe Rubit::Bitmap do
       expect(subject.to_s).to eq("00000\n00000\n00000\n00000\n00000\n00000\n")
     end
   end
+
+  describe '#set_colour' do
+    it 'sets pixel colour using one-based indexing' do
+      # 0  0  0
+      # 0  0  0
+      subject.pixels = [[0, 0,0], [0, 0, 0]]
+      column, row = 3, 2
+      subject.set_colour(column, row, 'A')
+      expect(subject.get_colour(column, row)).to eq('A')
+    end
+  end
+
+  describe '#get_colour' do
+    it 'gets pixel colour using one-based indexing' do
+      # 0  0  0
+      # 0  0 'A'
+      subject.pixels = [[0, 0, 0], [0, 0, 'A']]
+      column, row = 3, 2
+      expect(subject.get_colour(column, row)).to eq('A')
+    end
+  end
+
 end

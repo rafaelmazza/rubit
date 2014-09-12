@@ -12,6 +12,16 @@ module Rubit
     attr_reader :terminate, :bitmap
   end
 
+  class CommandL < Command
+    def initialize(column, row, colour)
+      @column, @row, @colour = column, row, colour
+    end
+    def execute(bitmap)
+      bitmap.set_colour(@column, @row, @colour)
+      bitmap
+    end
+  end
+
   class CommandI < Command
     def initialize(columns, rows)
       @columns, @rows = columns, rows

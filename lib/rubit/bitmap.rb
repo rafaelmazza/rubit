@@ -17,7 +17,11 @@ module Rubit
     end
 
     def get_colour(column, row)
-      @pixels[row - 1][column - 1] 
+      @pixels[row - 1][column - 1] unless out_of_bounds?(column, row)
+    end
+
+    def out_of_bounds?(column, row)
+      (row <= 0 || row > @rows_count) || (column <= 0 && column > @columns_count)
     end
 
     def fill(x, y, new_colour, old_colour)
@@ -48,6 +52,10 @@ module Rubit
 
     def clear
       @pixels = create_new_pixel_matrix
+    end
+
+    def show
+      puts self
     end
 
     def to_s

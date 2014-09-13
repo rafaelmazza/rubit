@@ -13,6 +13,20 @@ describe Rubit::CommandParser do
       expect(Rubit::CommandI).to receive(:new).with(5, 6)
       Rubit::CommandParser.parse(command_input)
     end
+
+    context 'when command not found' do
+      it 'raises name error' do
+        command_input = 'G 3 3 C'
+        expect { subject.parse(command_input) }.to raise_error(NameError)
+      end
+    end
+
+    context 'when input wrong command arguments' do
+      it 'raises argument error' do
+        command_input = 'L 3 3'
+        expect { Rubit::CommandParser.parse(command_input) }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
 

@@ -10,22 +10,31 @@ describe Rubit::CLI do
       expect(input).to receive(:gets)
       subject.start
     end
+
+    context 'when no bitmap created yet' do
+      let(:input) { StringIO.new("L 3 3 C") }
+
+      it 'notifies the user' do
+        subject.start
+        expect(output.string).to match('No bitmap created yet.')
+      end
+    end
+
+    context 'when command is not found' do
+      let(:input) { StringIO.new("G 3 3 C") }
+      it 'notifies the user' do
+        subject.start
+        expect(output.string).to match('Command not found.')
+      end
+    end
+
+    context 'when command arguments are wrong' do
+      let(:input) { StringIO.new("L 3 3") }
+      it 'notifies the user' do
+        subject.start
+        expect(output.string).to match('Wrong command usage. Please, check the README for help.')
+      end
+    end
   end
 end
 
-# class InputMock 
-#   attr_reader :inputs
-#
-#   def initialize
-#     @inputs = []
-#   end
-#
-#   def <<(input)
-#     @inputs << input
-#   end
-#
-#   def gets
-#     @inputs.shift
-#   end
-# end
-#

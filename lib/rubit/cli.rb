@@ -8,9 +8,17 @@ module Rubit
 
     def start
       while command_input = get_command_input
-        command = CommandParser.parse(command_input)
-        @bitmap = command.execute(@bitmap)
-        break if command.terminate
+        begin
+          command = CommandParser.parse(command_input)
+          @bitmap = command.execute(@bitmap)
+          break if command.terminate
+        rescue NoMethodError => error
+          @output.puts 'No bitmap created yet.'
+        rescue NameError => error
+          @output.puts 'Command not found.'
+        rescue ArgumentError => error
+          @output.puts 'Wrong command usage. Please, check the README for help.'
+        end
       end
     end
 

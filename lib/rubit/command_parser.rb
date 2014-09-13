@@ -72,9 +72,7 @@ module Rubit
 
   class CommandS < Command
     def execute(bitmap)
-      # puts 'aqui'
-      # puts bitmap.inspect
-      puts bitmap
+      bitmap.show
       bitmap
     end
   end

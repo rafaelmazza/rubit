@@ -15,7 +15,7 @@ module Rubit
     end
 
     def set_colour(column, row, colour)
-      @pixels[row - 1][column - 1] = colour
+      @pixels[row - 1][column - 1] = colour unless out_of_bounds?(column, row)
     end
 
     def get_colour(column, row)
@@ -27,17 +27,15 @@ module Rubit
     end
 
     def fill(x, y, new_colour, old_colour)
+      return if out_of_bounds?(x, y)
+      return if old_colour == new_colour
       current_colour = get_colour(x, y)
-      if (x > 0 && x <= @columns_count &&
-          y > 0 && y <= @rows_count &&
-          current_colour == old_colour &&
-          current_colour != new_colour)
-        set_colour(x, y, new_colour)
-        fill(x + 1, y, new_colour, old_colour)
-        fill(x - 1, y, new_colour, old_colour)
-        fill(x, y + 1, new_colour, old_colour)
-        fill(x, y - 1, new_colour, old_colour)
-      end
+      return if current_colour != old_colour
+      set_colour(x, y, new_colour)
+      fill(x + 1, y, new_colour, old_colour)
+      fill(x - 1, y, new_colour, old_colour)
+      fill(x, y + 1, new_colour, old_colour)
+      fill(x, y - 1, new_colour, old_colour)
     end
 
     def draw_horizontal_segment(x1, x2, row, colour)

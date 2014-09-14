@@ -2,9 +2,10 @@ module Rubit
 
   class CommandParser
     def self.parse(command_input)
-      command_args = command_input.split.map {|arg| arg.match(/^(\d)+$/) ? arg.to_i : arg}
-      command_name = command_args.shift
-      Object.const_get("Rubit::Command#{command_name}").new(*command_args)
+      command_name, *command_args = command_input.split.map {|a| a.match(/^\d+$/) ? a.to_i : a}
+      command_class_name = 'Rubit::Command' + command_name
+      command_class = Object.const_get(command_class_name)
+      command_class.new(*command_args)
     end
   end
 

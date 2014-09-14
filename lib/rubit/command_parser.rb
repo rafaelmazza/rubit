@@ -12,6 +12,13 @@ module Rubit
     attr_reader :terminate, :bitmap
   end
 
+  class CommandU < Command
+    def execute(bitmap)
+      bitmap.undo
+      bitmap
+    end
+  end
+
   class CommandC < Command
     def execute(bitmap)
       bitmap.clear

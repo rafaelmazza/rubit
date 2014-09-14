@@ -1,11 +1,13 @@
 module Rubit
   class Bitmap
-    attr_accessor :columns_count, :rows_count, :pixels
+    attr_accessor :columns_count, :rows_count, :snapshots, :pixels
+    # attr_reader :pixels
 
     def initialize(columns_count, rows_count)
       @columns_count = columns_count
       @rows_count = rows_count
       @pixels = create_new_pixel_matrix
+      @snapshots = []
     end
 
     def create_new_pixel_matrix
@@ -21,7 +23,7 @@ module Rubit
     end
 
     def out_of_bounds?(column, row)
-      (row <= 0 || row > @rows_count) || (column <= 0 && column > @columns_count)
+      (row <= 0 || row > @rows_count) || (column <= 0 || column > @columns_count)
     end
 
     def fill(x, y, new_colour, old_colour)
@@ -58,8 +60,25 @@ module Rubit
       puts self
     end
 
+    def take_snapshot
+      @snapshots << serialize(@pixels)
+    end
+
+    def undo
+      @pixels = @snapshots.empty? ? nil : deserialize(@snapshots.pop)
+    end
+
     def to_s
-      @pixels.map {|row| "#{row.join}\n"}.join 
+      @pixels.map {|row| "#{row.join}\n"}.join unless @pixels.nil?
+    end
+
+    private
+    def serialize(pixels)
+      Marshal.dump(pixels)
+    end
+
+    def deserialize(snapshot)
+      Marshal.load(snapshot) unless snapshot.nil?
     end
   end
 end

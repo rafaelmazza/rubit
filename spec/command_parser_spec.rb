@@ -30,6 +30,22 @@ describe Rubit::CommandParser do
   end
 end
 
+describe Rubit::CommandU do
+  describe '#execute' do
+    it 'calls bitmap undo' do
+      bitmap = double
+      expect(bitmap).to receive(:undo)
+      subject.execute(bitmap)
+    end
+
+    it 'returns modified bitmap' do
+      bitmap = double()
+      allow(bitmap).to receive(:undo)
+      expect(subject.execute(bitmap)).to eq(bitmap)
+    end
+  end
+end
+
 describe Rubit::CommandF do
   describe '#execute' do
     let(:x) { 2 }

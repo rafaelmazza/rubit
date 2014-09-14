@@ -11,6 +11,10 @@ describe Rubit::Bitmap do
       expect(subject.columns_count).to eq(5)
       expect(subject.rows_count).to eq(6)
     end
+
+    it 'initializes snapshots array' do
+      expect(subject.snapshots).to eq([])
+    end
   end
 
   describe '#create_new_pixel_matrix' do
@@ -28,9 +32,6 @@ describe Rubit::Bitmap do
 
   describe '#set_colour' do
     it 'sets pixel colour using one-based indexing' do
-      # 0  0  0
-      # 0  0  0
-      subject.pixels = [[0, 0,0], [0, 0, 0]]
       column, row = 3, 2
       subject.set_colour(column, row, 'A')
       expect(subject.get_colour(column, row)).to eq('A')
@@ -87,6 +88,7 @@ describe Rubit::Bitmap do
       # 0  0  0
       # 0  0 'A'
       subject.pixels = [[0, 0, 0], [0, 0, 'A']]
+      # allow(subject).to receive(:pixels) { [[0, 0, 0], [0, 0, 'A']] }
       column, row = 3, 2
       expect(subject.get_colour(column, row)).to eq('A')
     end
@@ -97,6 +99,43 @@ describe Rubit::Bitmap do
       subject.set_colour(1, 1, 'A')
       subject.clear
       expect(subject.pixels).to eq(empty_pixel_matrix)
+    end
+  end
+
+  describe '#take_snapshot' do
+    it 'pushes pixels current states in snapshots stack' do
+      expect {
+        subject.take_snapshot
+      }.to change{ subject.snapshots }
+    end
+
+    it 'serializes bitmap pixel matrix' do
+      expect(subject).to receive(:serialize)
+      subject.take_snapshot
+    end
+  end
+
+  describe '#undo' do
+    context 'when pixels states stack is empty' do
+      it 'sets pixels to nil' do
+        subject.undo
+        expect(subject.pixels).to eq(nil)
+      end
+
+      it 'returns nil' do
+        expect(subject.undo).to be(nil)
+      end
+    end
+
+    context 'when there are previous states' do
+      it 'returns last serialized state' do
+        snapshot = double('snapshot')
+        deserialized = double('deserialized')
+        allow(Marshal).to receive(:load).with(snapshot) { deserialized }
+        # allow(subject).to receive(:snapshots) { [snapshot] }
+        subject.snapshots = [snapshot]
+        expect(subject.undo).to eq(deserialized)
+      end
     end
   end
 

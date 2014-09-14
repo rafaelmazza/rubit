@@ -51,7 +51,7 @@ module Rubit
     end
 
     def clear
-      @pixels = create_new_pixel_matrix
+      @pixels.map {|row| row.map! {0} }
     end
 
     def show

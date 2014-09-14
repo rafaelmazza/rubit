@@ -67,7 +67,7 @@ module Rubit
     end
 
     def to_s
-      @pixels.map {|row| "#{row.join}\n"}.join unless @pixels.nil?
+      @pixels.map {|row| "#{row.join}\n"}.join
     end
 
     private

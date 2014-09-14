@@ -7,6 +7,9 @@ module Rubit
     end
 
     def start
+      puts "-------------------------------"
+      puts "Basic Interactive Bitmap Editor"
+      puts "-------------------------------"
       while command_input = get_command_input
         begin
           command = CommandParser.parse(command_input)
@@ -23,6 +26,7 @@ module Rubit
     end
 
     def get_command_input
+      @output.print "# "
       @input.gets
     end
   end

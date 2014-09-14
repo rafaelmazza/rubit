@@ -11,7 +11,7 @@ module Rubit
         begin
           command = CommandParser.parse(command_input)
           @bitmap = command.execute(@bitmap)
-          break if command.terminate
+          break if @bitmap.nil?
         rescue NoMethodError => error
           @output.puts 'No bitmap created yet.'
         rescue NameError => error

@@ -9,7 +9,6 @@ module Rubit
   end
 
   class Command
-    attr_reader :terminate, :bitmap
   end
 
   class CommandU < Command
@@ -93,7 +92,7 @@ module Rubit
   class CommandX < Command
     def execute(bitmap)
       puts 'Bye!'
-      @terminate = true
+      nil
     end
   end
 

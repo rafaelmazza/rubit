@@ -156,3 +156,11 @@ describe Rubit::CommandI do
   end
 end
 
+describe Rubit::CommandX do
+  describe '#execute' do
+    it 'returns nil' do
+      bitmap = double
+      expect(subject.execute(bitmap)).to eq(nil)
+    end
+  end
+end

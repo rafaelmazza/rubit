@@ -21,6 +21,7 @@ module Rubit
 
   class CommandC < Command
     def execute(bitmap)
+      bitmap.take_snapshot
       bitmap.clear
       bitmap
     end
@@ -31,6 +32,7 @@ module Rubit
       @x, @y, @colour = x, y, colour
     end
     def execute(bitmap)
+      bitmap.take_snapshot
       @old_colour = bitmap.get_colour(@x, @y)
       bitmap.fill(@x, @y, @colour, @old_colour)
       bitmap
@@ -42,6 +44,7 @@ module Rubit
       @x1, @x2, @row, @colour = x1, x2, row, colour
     end
     def execute(bitmap)
+      bitmap.take_snapshot
       bitmap.draw_horizontal_segment(@x1, @x2, @row, @colour)
       bitmap
     end
@@ -52,6 +55,7 @@ module Rubit
       @column, @y1, @y2, @colour = column, y1, y2, colour
     end
     def execute(bitmap)
+      bitmap.take_snapshot
       bitmap.draw_vertical_segment(@column, @y1, @y2, @colour)
       bitmap
     end
@@ -62,6 +66,7 @@ module Rubit
       @column, @row, @colour = column, row, colour
     end
     def execute(bitmap)
+      bitmap.take_snapshot
       bitmap.set_colour(@column, @row, @colour)
       bitmap
     end
@@ -72,6 +77,7 @@ module Rubit
       @columns, @rows = columns, rows
     end
     def execute(bitmap)
+      bitmap.take_snapshot unless bitmap.nil?
       bitmap = Rubit::Bitmap.new(@columns, @rows)
       bitmap
     end

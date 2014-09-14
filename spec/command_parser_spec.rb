@@ -53,10 +53,53 @@ describe Rubit::CommandF do
     let(:new_colour) { 'A' }
     let(:old_colour) { 0 }
     subject { Rubit::CommandF.new(x, y, new_colour) }
+    let(:bitmap) { double.as_null_object }
+
     it 'fills bitmap area' do
-      bitmap = double()
       allow(bitmap).to receive(:get_colour) { 0 }
       expect(bitmap).to receive(:fill).with(x, y, new_colour, old_colour)
+      subject.execute(bitmap)
+    end
+
+    it 'takes a bitmap snapshot' do
+      expect(bitmap).to receive(:take_snapshot)
+      subject.execute(bitmap)
+    end
+  end
+end
+
+describe Rubit::CommandH do
+  subject { Rubit::CommandH.new(3, 4, 2, 'Z') }
+
+  describe '#execute' do
+    let(:bitmap) { double.as_null_object }
+
+    it 'takes a bitmap snapshot' do
+      expect(bitmap).to receive(:take_snapshot)
+      subject.execute(bitmap)
+    end
+  end
+end
+
+describe Rubit::CommandV do
+  subject { Rubit::CommandV.new(2, 3, 4, 'W') }
+
+  describe '#execute' do
+    let(:bitmap) { double.as_null_object }
+
+    it 'takes a bitmap snapshot' do
+      expect(bitmap).to receive(:take_snapshot)
+      subject.execute(bitmap)
+    end
+  end
+end
+
+describe Rubit::CommandC do
+  describe '#execute' do
+    let(:bitmap) { double.as_null_object }
+
+    it 'takes a bitmap snapshot' do
+      expect(bitmap).to receive(:take_snapshot)
       subject.execute(bitmap)
     end
   end
@@ -68,9 +111,15 @@ describe Rubit::CommandL do
     let(:row) { 3 }
     let(:colour) { 'A' }
     subject { Rubit::CommandL.new(column, row, colour) }
+    let(:bitmap) { double.as_null_object }
+
     it 'colours a bitmap pixel' do
-      bitmap = double()
       expect(bitmap).to receive(:set_colour).with(column, row, colour)
+      subject.execute(bitmap)
+    end
+
+    it 'takes a bitmap snapshot' do
+      expect(bitmap).to receive(:take_snapshot)
       subject.execute(bitmap)
     end
   end
@@ -81,10 +130,28 @@ describe Rubit::CommandI do
     let(:columns) { 5 }
     let(:rows) { 6 }
     subject { Rubit::CommandI.new(columns, rows) }
-    it 'creates a bitmap' do
-      bitmap = double()
-      expect(Rubit::Bitmap).to receive(:new).with(columns, rows)
-      subject.execute(bitmap)
+
+    context 'when there is a bitmap' do
+      let(:bitmap) { double.as_null_object }
+
+      it 'creates a bitmap' do
+        expect(Rubit::Bitmap).to receive(:new).with(columns, rows)
+        subject.execute(bitmap)
+      end
+
+      it 'takes a bitmap snapshot' do
+        expect(bitmap).to receive(:take_snapshot)
+        subject.execute(bitmap)
+      end
+    end
+
+    context 'when no bitmap was created' do
+      let(:bitmap) { nil }
+
+      it 'does not take a snapshot' do
+        expect(bitmap).to_not receive(:take_snapshot)
+        subject.execute(bitmap)
+      end
     end
   end
 end

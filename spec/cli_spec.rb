@@ -35,6 +35,15 @@ describe Rubit::CLI do
         expect(output.string).to match('Wrong command usage. Please, check the README for help.')
       end
     end
+
+    context 'when columns (M) or rows (N) are out of allowed range (1 <= M, 1 <= N <= 250)' do
+      let(:input) { StringIO.new("I 0 10") }
+
+      it 'notifies the user' do
+        subject.start
+        expect(output.string).to match('Rows/columns out of allowed range.')
+      end
+    end
   end
 end
 

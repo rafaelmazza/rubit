@@ -1,7 +1,10 @@
 module Rubit
   class Bitmap
+    MIN_ROWS_NUMBER = 1
+    MAX_ROWS_NUMBER = 250
+    MIN_COLUMNS_NUMBER = 1
+
     attr_accessor :columns_count, :rows_count, :snapshots, :pixels
-    # attr_reader :pixels
 
     def initialize(columns_count, rows_count)
       @columns_count = columns_count
@@ -11,6 +14,7 @@ module Rubit
     end
 
     def create_new_pixel_matrix
+      raise Rubit::OutOfRange unless allowed_range?
       Array.new(@rows_count) { Array.new(@columns_count) { 0 } }
     end
 
@@ -78,6 +82,12 @@ module Rubit
     def deserialize(snapshot)
       Marshal.load(snapshot) unless snapshot.nil?
     end
+
+    def allowed_range?
+      @columns_count >= MIN_COLUMNS_NUMBER && @rows_count.between?(MIN_ROWS_NUMBER, MAX_ROWS_NUMBER)
+    end
   end
+  
+  class OutOfRange < StandardError; end
 end
 

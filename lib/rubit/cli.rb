@@ -21,6 +21,8 @@ module Rubit
           @output.puts 'Command not found.'
         rescue ArgumentError => error
           @output.puts 'Wrong command usage. Please, check the README for help.'
+        rescue OutOfRange => error
+          @output.puts 'Rows/columns out of allowed range.'
         end
       end
     end

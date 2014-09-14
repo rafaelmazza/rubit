@@ -15,6 +15,26 @@ describe Rubit::Bitmap do
     it 'initializes snapshots array' do
       expect(subject.snapshots).to eq([])
     end
+
+    context 'when creating an out of bounds matrix' do
+      it 'does not create a matrix with less than 1 row' do
+        expect {
+          subject = Rubit::Bitmap.new(columns, 0)
+        }.to raise_error
+      end
+
+      it 'does not create a matrix with more than 250 rows' do
+        expect {
+          subject = Rubit::Bitmap.new(columns, 251) 
+        }.to raise_error
+      end
+
+      it 'does not create a matrix with less than 1 column' do
+        expect {
+          subject = Rubit::Bitmap.new(0, rows) 
+        }.to raise_error
+      end
+    end
   end
 
   describe '#create_new_pixel_matrix' do
@@ -22,6 +42,7 @@ describe Rubit::Bitmap do
       # empty_matrix = Array.new(rows) { Array.new(columns) { 0 }}
       expect(subject.create_new_pixel_matrix).to eq(empty_pixel_matrix)
     end
+    
   end
   
   describe '#to_s' do
